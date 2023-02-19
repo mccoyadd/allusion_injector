@@ -63,6 +63,8 @@ def format_allusion(allusion):
             return "AS ONCE DID %s" % al2
     elif altype=="of":
         return "%s" % al1
+    elif altype=="compound":
+        return "%s" % al1
     elif altype=="adj2np":
         return "LIKE %s" % al1
     elif altype in ["acomp","appos"]:
