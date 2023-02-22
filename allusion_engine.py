@@ -11,7 +11,7 @@ connection = sqlite3.connect("wiki.db")
 cursor = connection.cursor()
 
 
-# In[21]:
+# In[2]:
 
 
 def query_db(target,dedup=True):
@@ -39,13 +39,13 @@ query_db("comprise")[:4]
 
 # ## Formatting Allusions
 
-# In[22]:
+# In[3]:
 
 
 import random
 
 
-# In[23]:
+# In[4]:
 
 
 def format_allusion(allusion):
@@ -83,14 +83,14 @@ def format_allusion(allusion):
 
 # ## Getting Allusions Based on Input
 
-# In[24]:
+# In[5]:
 
 
 import spacy
 nlp = spacy.load("en_core_web_lg")
 
 
-# In[25]:
+# In[6]:
 
 
 def get_target_and_others(text,n_other=5):
@@ -108,13 +108,13 @@ def get_target_and_others(text,n_other=5):
 get_target_and_others("I like you. you are my friend. I remain")
 
 
-# In[26]:
+# In[7]:
 
 
 import random
 
 
-# In[27]:
+# In[8]:
 
 
 def get_n_from_possibilities(possibilities,target_pos,others,n=5,used_cores=[]):
@@ -139,7 +139,7 @@ def get_n_from_possibilities(possibilities,target_pos,others,n=5,used_cores=[]):
         
 
 
-# In[28]:
+# In[9]:
 
 
 def prep_allusion(allusion,target):
@@ -149,17 +149,26 @@ def prep_allusion(allusion,target):
     return {"ready_allusion":format_allusion(allusion),"core_allusion":allusion[2],"article":allusion[6],"target":target}
 
 
-# In[32]:
+# In[10]:
+
+
+with open('custom_stopwords.txt','r') as f:
+    stops = [i.rstrip('\n') for i in f.readlines() if i.startswith("##")==False]
+
+
+# In[11]:
 
 
 def get_allusions_for_text(text,n=5,used_cores=[]):
     """
     main function, what the interface will query
-    used_cores
+    used_cores|
     """
     target_tup,others = get_target_and_others(text)
     #print(target_tup)
     target,target_pos = target_tup
+    if target in stops: ## don't return for stopwords
+        return []
     #print( target,others)
     possibilities = query_db(target)
     allusions = get_n_from_possibilities(possibilities,target_pos,others,n,used_cores)
@@ -173,7 +182,7 @@ get_allusions_for_text("I like you. you are my friend. I remain a distressed nom
 
 # `used_cores` helps with deduplication.
 
-# In[33]:
+# In[12]:
 
 
 get_allusions_for_text("I like you. you are my friend. I remain a distressed nomadic people",used_cores=["of the South"])
