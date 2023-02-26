@@ -7,7 +7,7 @@
 
 
 import sqlite3
-connection = sqlite3.connect("wiki.db")
+connection = sqlite3.connect("wiki_clean.db")
 cursor = connection.cursor()
 
 
@@ -159,6 +159,12 @@ with open('custom_stopwords.txt','r') as f:
 # In[11]:
 
 
+max_len_of_allusion = 140 ## for not returning really long allusions
+
+
+# In[12]:
+
+
 def get_allusions_for_text(text,n=5,used_cores=[]):
     """
     main function, what the interface will query
@@ -171,6 +177,7 @@ def get_allusions_for_text(text,n=5,used_cores=[]):
         return []
     #print( target,others)
     possibilities = query_db(target)
+    possibilities = [p for p in possibilities if len(p[2])<max_len_of_allusion]
     allusions = get_n_from_possibilities(possibilities,target_pos,others,n,used_cores)
     #print(allusions)
     allusions = [prep_allusion(a,target) for a in allusions]
@@ -182,7 +189,7 @@ get_allusions_for_text("I like you. you are my friend. I remain a distressed nom
 
 # `used_cores` helps with deduplication.
 
-# In[12]:
+# In[14]:
 
 
 get_allusions_for_text("I like you. you are my friend. I remain a distressed nomadic people",used_cores=["of the South"])
