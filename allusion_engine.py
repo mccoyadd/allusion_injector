@@ -7,7 +7,7 @@
 
 
 import sqlite3
-connection = sqlite3.connect("wiki_clean.db")
+connection = sqlite3.connect("wiki_to_use.db")
 cursor = connection.cursor()
 
 
