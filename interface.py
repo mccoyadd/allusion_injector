@@ -116,11 +116,15 @@ from datetime import datetime
 #import os
 # timestamp = datetime.now().strftime("%m/%d/%Y_%H:%M")
 
+import to_html
+
 def print_out(e=None):
 	timestamp = datetime.now().strftime("%m-%d-%Y_%H:%M")
-	filename = "output_%s.txt" % timestamp
-	with open("output/"+filename,'w') as f:
-		f.write(text.get("1.0", "end"))
+	tkinter_tagged_text = text.dump("1.0", "end")
+	filename = "output/output_%s.html" % timestamp
+	text_converted_to_html = to_html.write_data_as_html(tkinter_tagged_text,filename), 
+	# with open("output/"+text_converted_to_html,'w') as f:
+	# 	f.write(text_converted_to_html,"output")
 	messagebox.showinfo("Message","saved to %s" % filename)
 
 print_button = tk.Button(info_frame, text="💾",command=print_out,padx=5,pady=5)
@@ -210,10 +214,12 @@ def insert(e):
 	if loaded_allusion!=None:
 		text_to_insert = loaded_allusion["ready_allusion"]
 		if text_to_insert!=loaded_empty_text:
+			tags = (loaded_allusion['article'],"wiki")
 			cursor_position = text.index(tk.INSERT)
 			#print(cursor_position)
 			#text.insert(cursor_position,"\u200c"+text_to_insert+"\u200c\u200c")
-			text.insert(cursor_position,text_to_insert)
+			text.insert(cursor_position,text_to_insert,tags)
+			text.tag_configure('wiki', foreground='#3535cc')
 		global used_cores
 		#print(loaded_allusion)
 		used_cores.append(loaded_allusion["core_allusion"])
