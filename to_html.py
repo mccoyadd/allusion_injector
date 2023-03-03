@@ -17,7 +17,7 @@ def process_tkinter(data):
 	html_string = ""
 	tool_tip = ""
 	nc = 1  
-	notes_section = '<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr /><ol/>'
+	notes_section = '<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr /><ol>'
 	for thing in data:
 		if thing[0]=="text":
 			html_string+=prep_string(thing[1])
