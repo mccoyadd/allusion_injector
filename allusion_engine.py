@@ -103,7 +103,7 @@ def get_target_and_others(text,n_other=5):
     tokens = list(reversed([i for i in list(spacied.sents)[-1]]))
     tokens = [t for t in tokens if t.pos_!="PUNCT"]
     target = tokens[0]
-    return ((str(target).lower(),target.pos_),[str(i) for i in tokens[1:n_other+1]])
+    return ((target.lemma_,target.pos_),[i.lemma_ for i in tokens[1:n_other+1]])
     
 get_target_and_others("I like you. you are my friend. I remain")
 
@@ -189,7 +189,7 @@ get_allusions_for_text("I like you. you are my friend. I remain a distressed nom
 
 # `used_cores` helps with deduplication.
 
-# In[14]:
+# In[13]:
 
 
 get_allusions_for_text("I like you. you are my friend. I remain a distressed nomadic people",used_cores=["of the South"])
