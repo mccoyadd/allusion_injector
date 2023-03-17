@@ -175,7 +175,9 @@ def get_allusions(e):
 	print(cool_off)
 	if cool_off==0:
 		current_text = text.get("1.0",'end-1c')
+		current_text = current_text.rstrip("\n ")
 		allusions = allusion_engine.get_allusions_for_text(current_text,used_cores=used_cores) 
+		print(allusions)
 		if allusions!=[]:
 			cool_off = 10 ## reset
 			target_name.config(text=allusions[0]['target'])
