@@ -1,3 +1,3 @@
-An assistive interface for writers that recommends allusions.
+Android assistive interface for writers that recommends allusions.
 
 ![](screenshot.jpg)
